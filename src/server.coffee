@@ -1,5 +1,4 @@
 http = require("http")
-_ = require("lodash")
 controller = require("./controller")
 
 module.exports = =>  
