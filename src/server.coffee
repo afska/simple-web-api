@@ -1,7 +1,7 @@
 http = require("http")
 controller = require("./controller")
 
-module.exports = =>  
+module.exports = =>
   port = process.env.PORT || 8081
 
   http
@@ -14,6 +14,12 @@ module.exports = =>
           resource: request.url
           headers: request.headers
           body: data
+
+        response.with = (code, message) =>
+          response.writeHead code, { "Content-Type": "text/plain" }
+          response.end message
+        response.ok = => response.with 200, "ok"
+        response.notFound = => response.with 404, "not found"
 
         controller req, response
     .listen port
