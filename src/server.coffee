@@ -1,27 +1,29 @@
-http = require("http")
-controller = require("./controller")
+express = require("express")
+_ = require("lodash")
 
+###
+A http server that listen to connections and delegates requests to the controller.
+###
 module.exports = =>
+  _.assign process.env, try require("./config/env")
   port = process.env.PORT || 8081
 
-  http
-    .createServer (request, response) =>
-      data = ""
-      request.on "data", (chunk) => data += chunk
-      request.on "end", =>
-        req =
-          method: request.method
-          resource: request.url
-          headers: request.headers
-          body: data
+  # configure pretty-error...
+  require('pretty-error').start();
 
-        response.with = (code, message) =>
-          response.writeHead code, { "Content-Type": "text/plain" }
-          response.end message
-        response.ok = => response.with 200, "ok"
-        response.notFound = => response.with 404, "not found"
+  # configure express...
+  app = express()
+  app.use require("body-parser").json limit: "50mb" # json parser
+  app.use require("morgan") "dev" # logger
+  app.use express.static("views") # serve client side
+  app.engine "html", require("ejs").renderFile # rendering engine
+  app.set "view engine", "html" # view engine
+  require("./routes") app
 
-        controller req, response
-    .listen port
+  # ensure the blobs directories exist...
+  mkdirp = require("mkdirp")
+  mkdirp "#{__dirname}/../blobs/uploads"
 
-  console.log "[!] Listening in port #{port}"
+  # listen...
+  app.listen port
+  console.log "[!] Listening in port #{port}..."

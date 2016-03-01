@@ -1,4 +1,6 @@
 node_modules/
+blobs/
+src/config/env.coffee
 .idea
 *.sublime-workspace
 *.log

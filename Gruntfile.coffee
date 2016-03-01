@@ -12,8 +12,8 @@ module.exports = (grunt) ->
   #-----
   #Tasks
   #-----
-  grunt.registerTask "default", "server"
-  grunt.registerTask "server", "nodemon"
+  grunt.registerTask "default", "serve"
+  grunt.registerTask "serve", "nodemon"
   grunt.registerTask "test", "mochaTest"
 
   #------

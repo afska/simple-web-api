@@ -1,9 +1,15 @@
+## install
+```bash
+npm install -g grunt-cli
+npm install
+```
+
 ## run server:
 ```bash
-grunt server
+grunt serve
 # or:
 grunt
-# (as "server" is the default task)
+# (as "serve" is the default task)
 ```
 
 ## run tests:
