@@ -1,6 +1,6 @@
 ## install
 ```bash
-npm install -g grunt-cli
+sudo npm install -g grunt-cli
 npm install
 ```
 
